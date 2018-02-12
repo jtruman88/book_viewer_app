@@ -1,0 +1,29 @@
+<h2 class="content-subhead">Search</h2>
+
+<form action="/search" method="get">
+  <input name="query" value="<%= params[:query] %>">
+  <button type="submit">Search</button>
+</form>
+
+<% if @query == nil %>
+  <%= '' %>
+<% elsif @chapter_info.empty? %>
+  <p>Sorry, no matches were found.</p>
+<% else %>
+  <h2 class="content-subhead">Results for '<%= @query %>'</h2>
+  <% @chapter_info.each do |title, ind, para_info| %>
+  <ul>
+    <li>
+      <!-- <a href="/chapters/<%= ind %>"></a> -->
+      <%= "Chapter: #{ind} #{title}" %>
+      <% para_info.each do |paragraph, id| %>
+      <ul>
+        <li>
+          <a href="/chapters/<%= ind %>#paragraph<%= id %>"><%= make_bold(paragraph, @query) %></a>
+        </li>
+      </ul>
+      <% end %>
+    </li>
+  </ul>
+  <% end %>
+<% end %>
